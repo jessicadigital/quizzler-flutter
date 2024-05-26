@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'question.dart';
 
 void main() => runApp(Quizzler());
@@ -53,7 +54,26 @@ class _QuizPageState extends State<QuizPage> {
         ));
       }
 
-      questionNumber++;
+      if (questionNumber == questions.length-1) {
+        // Finished the quiz
+        Alert(
+          context:context,
+          title:'Quizzler',
+          desc:'The quiz has finished!',
+          buttons: [
+            DialogButton(child: Text('Start again'), onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                scoreKeeper = [];
+                questionNumber = 0;
+              });
+            })
+          ],
+        ).show();
+      }
+      else {
+        questionNumber++;
+      }
     });
   }
 
